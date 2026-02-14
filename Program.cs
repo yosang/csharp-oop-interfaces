@@ -6,6 +6,7 @@
         {
             Dog myPet = new Dog("Ella");
             Cat neighboursPet = new Cat("Yoda");
+            Turtle daughtersPet = new Turtle("Leonardo");
             ITrainable trainedPet = myPet;
             ITrainable myRobotDog = new RobotDog();
 
@@ -25,6 +26,7 @@
 
             foreach (ITrainable dog in army)
             {
+                // We know for sure these dogs are trainable so we can safely call Train()
                 Console.WriteLine("Army: " + dog.Train());
             }
 
@@ -33,11 +35,17 @@
             List<Animal> pets = new List<Animal>
             {
                 myPet,
+                daughtersPet,
                 neighboursPet
             };
 
             foreach (Animal pet in pets)
             {
+                // We can add a conditional here to see if this animal is trainable
+                // The is keyword checks if an instance is compatible with a certain type (can be an instance, class or value type)
+                // If it does, it casts it to ITrainable
+                // The new instance is available in a separate variable with the same object reference just a different type (no new object is created)
+                // If pet is successfully cast to ITrainable, it means we can call Train() from the new variable.
                 if (pet is ITrainable trainable)
                 {
                     Console.WriteLine(pet.Name + " is trainable");
@@ -110,6 +118,14 @@
         {
             return "MEW";
         }
+    }
+
+    public class Turtle : Animal
+    {
+        public override string Name { get; set; }
+        public Turtle(string name) => Name = name;
+
+        public override string MakeSound() => "...";
     }
 
     // Interfaces
